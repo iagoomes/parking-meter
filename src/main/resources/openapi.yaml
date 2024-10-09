@@ -1,0 +1,179 @@
+openapi: "3.1.0"
+info:
+  title: "Parking Meter"
+  description: "API for parking spots"
+  version: "1.0.0"
+servers:
+  - url: "/parking_meter"
+tags:
+  - name: "Parking Spots"
+    description: "Operations related to parking spots"
+paths:
+  /parking-spots:
+    get:
+      tags:
+        - Parking Spots
+      summary: "Retrieve all parking spots"
+      operationId: "findAllSpots"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/ParkingSpot"
+    post:
+      tags:
+        - Parking Spots
+      summary: "Create a new parking spot"
+      description: "Create a new parking spot"
+      operationId: "createSpot"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ParkingSpotDTO"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /parking-spots/cep/{cep}:
+    get:
+      tags:
+        - Parking Spots
+      summary: "Retrieve parking spot by CEP"
+      operationId: "findByCep"
+      parameters:
+        - name: "cep"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ParkingSpotDTO"
+  /parking-spots/{id}:
+    get:
+      tags:
+        - Parking Spots
+      summary: "Retrieve parking spot by ID"
+      operationId: "findById"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ParkingSpotDTO"
+    put:
+      tags:
+        - Parking Spots
+      summary: "Update parking spot"
+      operationId: "updateParkingSpot"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ParkingSpotDTO"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ParkingSpotDTO"
+    delete:
+      tags:
+        - Parking Spots
+      summary: "Delete parking spot"
+      operationId: "deleteParkingSpot"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Empty"
+components:
+  schemas:
+    ParkingSpot:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        cep:
+          type: "string"
+        location:
+          type: "string"
+        logradouro:
+          type: "string"
+        bairro:
+          type: "string"
+        cidade:
+          type: "string"
+        estado:
+          type: "string"
+        pais:
+          type: "string"
+        quantity:
+          type: "integer"
+          format: "int32"
+    ParkingSpotDTO:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        cep:
+          type: "string"
+        logradouro:
+          type: "string"
+        bairro:
+          type: "string"
+        cidade:
+          type: "string"
+        estado:
+          type: "string"
+        pais:
+          type: "string"
+        location:
+          type: "string"
+        quantity:
+          type: "integer"
+          format: "int32"
+    Empty:
+      type: "object"
+      properties: { }
