@@ -79,8 +79,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.7.0</version>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.1.0</version>
 		</dependency>
 	</dependencies>
 
@@ -111,7 +111,7 @@
 								<useSpringBoot3>true</useSpringBoot3>
 								<openApiNullable>false</openApiNullable>
 								<dateLibrary>java8</dateLibrary>
-								<genereteBuilders>true</genereteBuilders>
+								<generateBuilders>true</generateBuilders>
 								<booleanGetterPrefix>is</booleanGetterPrefix>
 								<hideGenerationTimestamp>true</hideGenerationTimestamp>
 								<useBeanValidation>false</useBeanValidation>
@@ -120,10 +120,10 @@
 								<async>true</async>
 								<returnResponse>true</returnResponse>
 								<additionalModelTypeAnnotations>
-									@SuppressWarnings({"hiding", "static-method"}, "unused")
-								</additionalModelTypeAnnotations>
-								<additionalModelTypeAnnotations>
-									@lombok.Builder @lombok.AllArgsConstructor @lombok.NoArgsConstructor
+									@SuppressWarnings({"hiding", "static-method", "unused"})
+									@lombok.Builder
+									@lombok.AllArgsConstructor
+									@lombok.NoArgsConstructor
 									@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)
 								</additionalModelTypeAnnotations>
 							</configOptions>
@@ -148,8 +148,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.13.0</version>
 				<configuration>
-					<source>11</source>
-					<target>11</target>
+					<source>21</source>
+					<target>21</target>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>
