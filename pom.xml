@@ -114,7 +114,7 @@
 								<generateBuilders>true</generateBuilders>
 								<booleanGetterPrefix>is</booleanGetterPrefix>
 								<hideGenerationTimestamp>true</hideGenerationTimestamp>
-								<useBeanValidation>false</useBeanValidation>
+								<useBeanValidation>true</useBeanValidation>
 								<useTags>true</useTags>
 								<useSwaggerAnnotations>true</useSwaggerAnnotations>
 								<async>true</async>
