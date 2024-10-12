@@ -9,7 +9,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 @Entity
@@ -21,7 +21,7 @@ public class TicketData {
     @ManyToOne
     @JoinColumn(name = "parking_spot_id", nullable = false)
     private ParkingSpotData parkingSpotData;
-    private LocalDateTime purchasedAt;
-    private LocalDateTime validUntil;
+    private OffsetDateTime purchasedAt;
+    private OffsetDateTime validUntil;
     private String licensePlate;
 }
