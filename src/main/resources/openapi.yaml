@@ -3,13 +3,11 @@ info:
   title: "Parking Meter"
   description: "API for parking spots"
   version: "1.0.0"
-servers:
-  - url: "/parking_meter"
 tags:
   - name: "Parking Spots"
     description: "Operations related to parking spots"
 paths:
-  /parking-spots:
+  /parking_spots:
     get:
       tags:
         - Parking Spots
@@ -19,11 +17,11 @@ paths:
         "200":
           description: "OK"
           content:
-            '*/*':
+            application/json:
               schema:
                 type: "array"
                 items:
-                  $ref: "#/components/schemas/ParkingSpot"
+                  $ref: "#/components/schemas/ParkingSpotResponse"
     post:
       tags:
         - Parking Spots
@@ -32,37 +30,19 @@ paths:
       operationId: "createSpot"
       requestBody:
         content:
-          application/json:
+          '*/*':
             schema:
-              $ref: "#/components/schemas/ParkingSpotDTO"
+              $ref: "#/components/schemas/ParkingSpotRequest"
         required: true
       responses:
         "200":
           description: "OK"
           content:
-            '*/*':
+            application/json:
               schema:
                 type: "string"
-  /parking-spots/cep/{cep}:
-    get:
-      tags:
-        - Parking Spots
-      summary: "Retrieve parking spot by CEP"
-      operationId: "findByCep"
-      parameters:
-        - name: "cep"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
-      responses:
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ParkingSpotDTO"
-  /parking-spots/{id}:
+
+  /parking_spots/{id}:
     get:
       tags:
         - Parking Spots
@@ -79,9 +59,9 @@ paths:
         "200":
           description: "OK"
           content:
-            '*/*':
+            application/json:
               schema:
-                $ref: "#/components/schemas/ParkingSpotDTO"
+                $ref: "#/components/schemas/ParkingSpotResponse"
     put:
       tags:
         - Parking Spots
@@ -96,17 +76,17 @@ paths:
             format: "int64"
       requestBody:
         content:
-          application/json:
+          '*/*':
             schema:
-              $ref: "#/components/schemas/ParkingSpotDTO"
+              $ref: "#/components/schemas/ParkingSpotRequest"
         required: true
       responses:
         "200":
           description: "OK"
           content:
-            '*/*':
+            application/json:
               schema:
-                $ref: "#/components/schemas/ParkingSpotDTO"
+                $ref: "#/components/schemas/ParkingSpotResponse"
     delete:
       tags:
         - Parking Spots
@@ -120,20 +100,35 @@ paths:
             type: "integer"
             format: "int64"
       responses:
+        204:
+          description: "No Content"
+          content: {}
+
+  /cep/{cep}:
+    get:
+      tags:
+        - Parking Spots
+      summary: "Retrieve parking spot by CEP"
+      operationId: "findByCep"
+      parameters:
+        - name: "cep"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            pattern: "^\\d{5}-\\d{3}$"
+      responses:
         "200":
           description: "OK"
           content:
-            '*/*':
+            application/json:
               schema:
-                $ref: "#/components/schemas/Empty"
+                $ref: "#/components/schemas/ParkingSpotResponse"
 components:
   schemas:
-    ParkingSpot:
+    ParkingSpotRequest:
       type: "object"
       properties:
-        id:
-          type: "integer"
-          format: "int64"
         cep:
           type: "string"
         location:
@@ -151,7 +146,7 @@ components:
         quantity:
           type: "integer"
           format: "int32"
-    ParkingSpotDTO:
+    ParkingSpotResponse:
       type: "object"
       properties:
         id:
@@ -174,6 +169,4 @@ components:
         quantity:
           type: "integer"
           format: "int32"
-    Empty:
-      type: "object"
-      properties: { }
+
