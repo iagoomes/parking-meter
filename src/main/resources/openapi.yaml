@@ -133,43 +133,13 @@ paths:
         - Ticket
       summary: "Create a new parking ticket"
       operationId: "createTicket"
-      parameters:
-        - name: "parkingSpotId"
-          in: "query"
-          required: true
-          schema:
-            type: "integer"
-            format: "int64"
-        - name: "hours"
-          in: "query"
-          required: true
-          schema:
-            type: "integer"
-            format: "int32"
-        - name: "licensePlate"
-          in: "query"
-          required: true
-          schema:
-            type: "string"
       requestBody:
         description: "Information to create a new ticket"
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                parkingSpotId:
-                  type: "integer"
-                  format: "int64"
-                  example: 1
-                hours:
-                  type: "integer"
-                  format: "int32"
-                  example: 2
-                licensePlate:
-                  type: "string"
-                  example: "ABC1234"
+              $ref: "#/components/schemas/TicketRequest"
       responses:
         "201":
           description: "Ticket created successfully"
@@ -252,4 +222,18 @@ components:
         licensePlate:
           type: "string"
           description: "License plate of the vehicle"
+          example: "ABC1234"
+    TicketRequest:
+      type: object
+      properties:
+        parkingSpotId:
+          type: "integer"
+          format: "int64"
+          example: 1
+        hours:
+          type: "integer"
+          format: "int32"
+          example: 2
+        licensePlate:
+          type: "string"
           example: "ABC1234"
