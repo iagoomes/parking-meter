@@ -7,6 +7,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface ParkingSpotRepositoryMapper {
     ParkingSpot toDomain(ParkingSpotData parkingSpotData);
-
-    ParkingSpotData toEntityRepository(ParkingSpot entity);
+    ParkingSpotData toRepositoryEntity(ParkingSpot entity);
 }

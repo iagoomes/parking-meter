@@ -3,7 +3,6 @@ package com.grupo7.parkingmeter.provider;
 import com.grupo7.parkingmeter.infra.exception.BusinessException;
 import com.grupo7.parkingmeter.infra.exception.ControllerNotFoundException;
 import com.grupo7.parkingmeter.infra.repository.ParkingSpotRepository;
-import com.grupo7.parkingmeter.infra.repository.TicketRepository;
 import com.grupo7.parkingmeter.infra.repository.model.ParkingSpotData;
 import com.grupo7.parkingmeter.provider.mapper.ParkingSpotRepositoryMapper;
 import com.grupo7.parkingmeter.provider.entity.ParkingSpot;
@@ -17,7 +16,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ParkingSpotProvider {
     private final ParkingSpotRepository parkingSpotRepository;
-    private final TicketRepository ticketRepository;
     private final ParkingSpotRepositoryMapper mapper;
 
     public List<ParkingSpot> findAll() {
@@ -39,7 +37,7 @@ public class ParkingSpotProvider {
     }
 
     public String create(ParkingSpot useCaseData) {
-        ParkingSpotData domain = mapper.toEntityRepository(useCaseData);
+        ParkingSpotData domain = mapper.toRepositoryEntity(useCaseData);
         return parkingSpotRepository.save(domain).getId().toString();
     }
 
@@ -48,7 +46,7 @@ public class ParkingSpotProvider {
             throw new BusinessException("Parking spot not found.");
         }
 
-        ParkingSpotData domain = mapper.toEntityRepository(useCaseData);
+        ParkingSpotData domain = mapper.toRepositoryEntity(useCaseData);
         domain.setId(id);
         return mapper.toDomain(parkingSpotRepository.save(domain));
     }

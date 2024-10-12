@@ -13,8 +13,17 @@ public class ParkingSpotUseCase {
 
     private final ParkingSpotProvider parkingSpotProvider;
 
+    public List<ParkingSpot> findAll() {
+        return parkingSpotProvider.findAll();
+    }
+
     public ParkingSpot findById(Long id) {
         return parkingSpotProvider.findById(id);
+    }
+
+    public ParkingSpot findByCep(String cep) {
+        parkingSpotProvider.findByCep(cep);
+        return null;
     }
 
     public String create(ParkingSpot useCaseData) {
@@ -29,12 +38,5 @@ public class ParkingSpotUseCase {
         parkingSpotProvider.delete(id);
     }
 
-    public List<ParkingSpot> findAll() {
-        return parkingSpotProvider.findAll();
-    }
 
-    public ParkingSpot findByCep(String cep) {
-        parkingSpotProvider.findByCep(cep);
-        return null;
-    }
 }
