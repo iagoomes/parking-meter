@@ -1,6 +1,6 @@
 package com.grupo7.parkingmeter.resource;
 
-import com.grupo7.parkingmeter.api.ParkingSpotsApiDelegate;
+import com.grupo7.parkingmeter.api.ParkingSpotApiDelegate;
 import com.grupo7.parkingmeter.model.ParkingSpotRequest;
 import com.grupo7.parkingmeter.model.ParkingSpotResponse;
 import com.grupo7.parkingmeter.service.ParkingSpotService;
@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Component
 @RequiredArgsConstructor
-public class ParkingSpotResource implements ParkingSpotsApiDelegate {
+public class ParkingSpotResource implements ParkingSpotApiDelegate {
 
     private final ParkingSpotService parkingSpotService;
 

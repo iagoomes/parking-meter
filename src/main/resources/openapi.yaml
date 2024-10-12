@@ -4,13 +4,15 @@ info:
   description: "API for parking spots"
   version: "1.0.0"
 tags:
-  - name: "Parking Spots"
+  - name: "Parking Spot"
     description: "Operations related to parking spots"
+  - name: "Ticket"
+    description: "Operations related to parking tickets"
 paths:
   /parking_spots:
     get:
       tags:
-        - Parking Spots
+        - Parking Spot
       summary: "Retrieve all parking spots"
       operationId: "findAllSpots"
       responses:
@@ -24,7 +26,7 @@ paths:
                   $ref: "#/components/schemas/ParkingSpotResponse"
     post:
       tags:
-        - Parking Spots
+        - Parking Spot
       summary: "Create a new parking spot"
       description: "Create a new parking spot"
       operationId: "createSpot"
@@ -45,7 +47,7 @@ paths:
   /parking_spots/{id}:
     get:
       tags:
-        - Parking Spots
+        - Parking Spot
       summary: "Retrieve parking spot by ID"
       operationId: "findById"
       parameters:
@@ -64,7 +66,7 @@ paths:
                 $ref: "#/components/schemas/ParkingSpotResponse"
     put:
       tags:
-        - Parking Spots
+        - Parking Spot
       summary: "Update parking spot"
       operationId: "updateParkingSpot"
       parameters:
@@ -89,7 +91,7 @@ paths:
                 $ref: "#/components/schemas/ParkingSpotResponse"
     delete:
       tags:
-        - Parking Spots
+        - Parking Spot
       summary: "Delete parking spot"
       operationId: "deleteParkingSpot"
       parameters:
@@ -107,7 +109,7 @@ paths:
   /cep/{cep}:
     get:
       tags:
-        - Parking Spots
+        - Parking Spot
       summary: "Retrieve parking spot by CEP"
       operationId: "findByCep"
       parameters:
@@ -124,6 +126,62 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ParkingSpotResponse"
+
+  /tickets:
+    post:
+      tags:
+        - Ticket
+      summary: "Create a new parking ticket"
+      operationId: "createTicket"
+      parameters:
+        - name: "parkingSpotId"
+          in: "query"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+        - name: "hours"
+          in: "query"
+          required: true
+          schema:
+            type: "integer"
+            format: "int32"
+        - name: "licensePlate"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        description: "Information to create a new ticket"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parkingSpotId:
+                  type: "integer"
+                  format: "int64"
+                  example: 1
+                hours:
+                  type: "integer"
+                  format: "int32"
+                  example: 2
+                licensePlate:
+                  type: "string"
+                  example: "ABC1234"
+      responses:
+        "201":
+          description: "Ticket created successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TicketResponse"
+        "400":
+          description: "Invalid request"
+        "500":
+          description: "Internal server error"
+
 components:
   schemas:
     ParkingSpotRequest:
@@ -169,4 +227,29 @@ components:
         quantity:
           type: "integer"
           format: "int32"
-
+    TicketResponse:
+      type: object
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+          example: 1
+        parkingSpotId:
+          type: "integer"
+          format: "int64"
+          description: "ID of the parking spot associated with the ticket"
+          example: 1
+        purchasedAt:
+          type: "string"
+          format: "date-time"
+          description: "Time when the ticket was purchased"
+          example: "2024-10-11T10:00:00Z"
+        validUntil:
+          type: "string"
+          format: "date-time"
+          description: "Time when the ticket expires"
+          example: "2024-10-11T12:00:00Z"
+        licensePlate:
+          type: "string"
+          description: "License plate of the vehicle"
+          example: "ABC1234"
