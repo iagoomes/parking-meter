@@ -10,26 +10,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    // Método para tratar ControllerNotFoundException
-    @ExceptionHandler(ControllerNotFoundException.class)
-    public ResponseEntity<Object> handleControllerNotFoundException(ControllerNotFoundException ex) {
-        // Cria uma resposta personalizada
-        String errorMessage = ex.getMessage();
-
-        // Retorna um ResponseEntity com o status HTTP 404 e a mensagem de erro
-        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
-    }
-
-    // Método para tratar BusinessException (ex.: duplicação de CEP)
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Object> handleBusinessException(BusinessException ex) {
-        // Cria uma resposta personalizada para duplicação de CEP
+        log.error("Erro de negócio", ex);
         String errorMessage = ex.getMessage();
-        // Retorna um ResponseEntity com o status HTTP 409 (Conflito) e a mensagem de erro
         return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
     }
 
-    // Método para outras exceções genéricas
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleGlobalException(Exception ex) {
         log.error("Erro interno no servidor", ex);
