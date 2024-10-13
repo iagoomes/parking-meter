@@ -3,6 +3,7 @@ package com.grupo7.parkingmeter.provider.mapper;
 import com.grupo7.parkingmeter.infra.repository.model.ParkingSpotData;
 import com.grupo7.parkingmeter.provider.entity.ParkingSpot;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper interface for converting between ParkingSpot domain entities and ParkingSpotData repository entities.
@@ -24,5 +25,6 @@ public interface ParkingSpotRepositoryMapper {
      * @param entity the ParkingSpot domain entity to convert
      * @return the converted ParkingSpotData repository entity
      */
+    @Mapping(target = "id", ignore = true)
     ParkingSpotData toRepositoryEntity(ParkingSpot entity);
 }

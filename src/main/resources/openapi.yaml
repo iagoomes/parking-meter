@@ -24,6 +24,24 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/ParkingSpotResponse"
+        "400":
+          description: "Invalid request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
     post:
       tags:
         - Parking Spot
@@ -43,6 +61,18 @@ paths:
             application/json:
               schema:
                 type: "string"
+        "400":
+          description: "Invalid request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
   /parking_spots/{id}:
     get:
@@ -64,16 +94,24 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ParkingSpotResponse"
-              example:
-                id: 1
-                cep: "12345-678"
-                location: "L1"
-                logradouro: "Rua Exemplo"
-                bairro: "Centro"
-                cidade: "São Paulo"
-                estado: "SP"
-                pais: "Brasil"
-                quantity: 10
+        "400":
+          description: "Invalid request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
     put:
       tags:
         - Parking Spot
@@ -91,15 +129,6 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/ParkingSpotRequest"
-            example:
-              cep: "12345-678"
-              location: "L1"
-              logradouro: "Rua Exemplo"
-              bairro: "Centro"
-              cidade: "São Paulo"
-              estado: "SP"
-              pais: "Brasil"
-              quantity: 10
         required: true
       responses:
         "200":
@@ -108,16 +137,24 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ParkingSpotResponse"
-              example:
-                id: 1
-                cep: "12345-678"
-                location: "L1"
-                logradouro: "Rua Exemplo"
-                bairro: "Centro"
-                cidade: "São Paulo"
-                estado: "SP"
-                pais: "Brasil"
-                quantity: 10
+        "400":
+          description: "Invalid request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
     delete:
       tags:
         - Parking Spot
@@ -131,9 +168,26 @@ paths:
             type: "integer"
             format: "int64"
       responses:
-        204:
+        "204":
           description: "No Content"
-          content: {}
+        "400":
+          description: "Invalid request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
   /cep/{cep}:
     get:
@@ -155,6 +209,24 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ParkingSpotResponse"
+        "400":
+          description: "Invalid request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
   /tickets:
     post:
@@ -178,8 +250,16 @@ paths:
                 $ref: "#/components/schemas/TicketResponse"
         "400":
           description: "Invalid request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "500":
           description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
 components:
   schemas:
@@ -193,7 +273,7 @@ components:
         location:
           type: "string"
           pattern: "^[LD]\\d+$"
-          exemple: "L1"
+          example: "L1"
         logradouro:
           type: "string"
           example: "Rua Exemplo"
@@ -202,18 +282,18 @@ components:
           example: "Centro"
         cidade:
           type: "string"
-          exemplo: "São Paulo"
+          example: "São Paulo"
         estado:
           type: "string"
           pattern: "^[A-Z]{2}$"
-          exemple: "SP"
+          example: "SP"
         pais:
           type: "string"
-          exemple: "Brasil"
+          example: "Brasil"
         quantity:
           type: "integer"
           format: "int32"
-          exemple: 10
+          example: 10
     ParkingSpotResponse:
       type: "object"
       properties:
@@ -279,3 +359,13 @@ components:
         licensePlate:
           type: "string"
           example: "ABC1234"
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: "string"
+          example: "messages"
+        timestamp:
+          type: "string"
+          format: "date-time"
+          example: "2024-10-11T10:00:00Z"

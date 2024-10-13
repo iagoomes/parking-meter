@@ -1,41 +1,36 @@
 package com.grupo7.parkingmeter.infra.exception;
 
+import com.grupo7.parkingmeter.model.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-/**
- * Global exception handler for handling exceptions across the whole application.
- */
+import java.time.OffsetDateTime;
+
 @Slf4j
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler  {
 
-    /**
-     * Handles BusinessException and returns a conflict status.
-     *
-     * @param ex the BusinessException
-     * @return a ResponseEntity containing the error message and HTTP status CONFLICT
-     */
     @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<Object> handleBusinessException(BusinessException ex) {
+    public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException ex) {
         log.error("Erro de negócio", ex);
-        String errorMessage = ex.getMessage();
-        return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .message(ex.getMessage())
+                .timestamp(OffsetDateTime.now())
+                .build();
+
+        return new ResponseEntity<>(errorResponse, ex.getStatus());
     }
 
-    /**
-     * Handles all other exceptions and returns an internal server error status.
-     *
-     * @param ex the Exception
-     * @return a ResponseEntity containing a generic error message and HTTP status INTERNAL_SERVER_ERROR
-     */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleGlobalException(Exception ex) {
+    public ResponseEntity<ErrorResponse> handleGlobalException(Exception ex) {
         log.error("Erro interno no servidor", ex);
-        // Retorna um status 500 para erros inesperados
-        return new ResponseEntity<>("Ocorreu um erro interno no servidor.", HttpStatus.INTERNAL_SERVER_ERROR);
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .message(ex.getMessage())
+                .timestamp(OffsetDateTime.now())
+                .build();
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

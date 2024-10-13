@@ -6,6 +6,7 @@ import com.grupo7.parkingmeter.infra.repository.model.ParkingSpotData;
 import com.grupo7.parkingmeter.provider.entity.ParkingSpot;
 import com.grupo7.parkingmeter.provider.mapper.ParkingSpotRepositoryMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class ParkingSpotProvider {
     public ParkingSpot findById(Long id) {
         Optional<ParkingSpotData> parkingSpotDataOptional = parkingSpotRepository.findById(id);
         return mapper.toDomain(
-                parkingSpotDataOptional.orElseThrow(() -> new BusinessException("Parking spot not found."))
+                parkingSpotDataOptional.orElseThrow(() -> new BusinessException("Parking spot not found.", HttpStatus.NOT_FOUND))
         );
     }
 
@@ -53,7 +54,7 @@ public class ParkingSpotProvider {
     public ParkingSpot findByCep(String cep) {
         Optional<ParkingSpotData> parkingSpotDataOptional = parkingSpotRepository.findByCep(cep);
         return mapper.toDomain(
-                parkingSpotDataOptional.orElseThrow(() -> new BusinessException("Parking spot not found."))
+                parkingSpotDataOptional.orElseThrow(() -> new BusinessException("Parking spot not found.", HttpStatus.NOT_FOUND))
         );
     }
 
@@ -78,7 +79,7 @@ public class ParkingSpotProvider {
      */
     public ParkingSpot update(Long id, ParkingSpot useCaseData) {
         if (!parkingSpotRepository.existsById(id)) {
-            throw new BusinessException("Parking spot not found.");
+            throw new BusinessException("Parking spot not found.", HttpStatus.NOT_FOUND);
         }
 
         ParkingSpotData domain = mapper.toRepositoryEntity(useCaseData);
@@ -94,7 +95,7 @@ public class ParkingSpotProvider {
      */
     public void delete(Long id) {
         if (!parkingSpotRepository.existsById(id)) {
-            throw new BusinessException("Parking spot not found.");
+            throw new BusinessException("Parking spot not found.", HttpStatus.NOT_FOUND);
         }
 
         parkingSpotRepository.deleteById(id);

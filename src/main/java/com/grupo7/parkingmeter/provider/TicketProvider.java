@@ -8,6 +8,7 @@ import com.grupo7.parkingmeter.provider.entity.Ticket;
 import com.grupo7.parkingmeter.provider.mapper.ParkingSpotRepositoryMapper;
 import com.grupo7.parkingmeter.provider.mapper.TicketRepositoryMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
@@ -49,7 +50,7 @@ public class TicketProvider {
     private void validateActiveTicketForLicensePlate(String licensePlate) {
         long activeTickets = ticketRepository.countValidTicketsByLicensePlate(licensePlate, OffsetDateTime.now());
         if (activeTickets > 0) {
-            throw new BusinessException("Já existe um ticket ativo para este veículo.");
+            throw new BusinessException("Já existe um ticket ativo para este veículo.", HttpStatus.CONFLICT);
         }
     }
 
@@ -63,7 +64,7 @@ public class TicketProvider {
     private void validateAvailableSpots(Long parkingSpotId, int maxSpots) {
         long validTickets = ticketRepository.countValidTickets(parkingSpotId, OffsetDateTime.now());
         if (validTickets >= maxSpots) {
-            throw new BusinessException("Não há vagas disponíveis no momento.");
+            throw new BusinessException("Não há vagas disponíveis no momento.", HttpStatus.CONFLICT);
         }
     }
 

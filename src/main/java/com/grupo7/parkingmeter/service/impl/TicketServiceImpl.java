@@ -7,6 +7,7 @@ import com.grupo7.parkingmeter.service.TicketService;
 import com.grupo7.parkingmeter.service.mapper.TicketMapper;
 import com.grupo7.parkingmeter.usecase.TicketUseCase;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 /**
@@ -29,10 +30,10 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public TicketResponse create(TicketRequest ticketRequest) {
         if (ticketRequest.getHours() > 3) {
-            throw new BusinessException("O ticket não pode ser emitido para mais de 3 horas.");
+            throw new BusinessException("O ticket não pode ser emitido para mais de 3 horas.", HttpStatus.BAD_REQUEST);
         }
         if (ticketRequest.getHours() <= 0) {
-            throw new BusinessException("O ticket não pode ser emitido por menos de 1 hora.");
+            throw new BusinessException("O ticket não pode ser emitido por menos de 1 hora.", HttpStatus.BAD_REQUEST);
         }
 
         return ticketMapper.toDTO(ticketUseCase.create(ticketMapper.toUseCaseData(ticketRequest)));
