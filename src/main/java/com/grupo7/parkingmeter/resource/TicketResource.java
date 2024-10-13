@@ -10,12 +10,21 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Resource class for managing parking tickets in the resource layer.
+ */
 @Component
 @RequiredArgsConstructor
 public class TicketResource implements TicketApiDelegate {
 
     private final TicketService ticketService;
 
+    /**
+     * Creates a new parking ticket.
+     *
+     * @param ticketRequest the ticket data to create
+     * @return a CompletableFuture containing a ResponseEntity with the created ticket
+     */
     @Override
     public CompletableFuture<ResponseEntity<TicketResponse>> createTicket(TicketRequest ticketRequest) {
         return CompletableFuture.supplyAsync(

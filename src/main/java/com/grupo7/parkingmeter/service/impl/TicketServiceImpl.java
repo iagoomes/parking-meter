@@ -9,6 +9,9 @@ import com.grupo7.parkingmeter.usecase.TicketUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service implementation for managing parking tickets.
+ */
 @Service
 @RequiredArgsConstructor
 public class TicketServiceImpl implements TicketService {
@@ -16,6 +19,13 @@ public class TicketServiceImpl implements TicketService {
     private final TicketUseCase ticketUseCase;
     private final TicketMapper ticketMapper;
 
+    /**
+     * Creates a new parking ticket.
+     *
+     * @param ticketRequest the ticket data to create
+     * @return the created ticket
+     * @throws BusinessException if the ticket duration is invalid
+     */
     @Override
     public TicketResponse create(TicketRequest ticketRequest) {
         if (ticketRequest.getHours() > 3) {

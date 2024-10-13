@@ -7,19 +7,58 @@ import jakarta.persistence.Table;
 import jakarta.persistence.GenerationType;
 import lombok.Data;
 
+/**
+ * Entity representing a parking spot.
+ */
 @Data
 @Entity
 @Table(name = "parking_spots")
 public class ParkingSpotData {
+
+    /**
+     * Unique identifier for the parking spot.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String cep;  // CEP como chave primária
-    private String location;  // Exemplo: número da vaga ou nome da área
-    private String logradouro;  // Rua (Logradouro)
+
+    /**
+     * Postal code (CEP) of the parking spot.
+     */
+    private String cep;
+
+    /**
+     * Location identifier, such as the spot number or area name.
+     */
+    private String location;
+
+    /**
+     * Street name (Logradouro) of the parking spot.
+     */
+    private String logradouro;
+
+    /**
+     * Neighborhood of the parking spot.
+     */
     private String bairro;
+
+    /**
+     * City where the parking spot is located.
+     */
     private String cidade;
+
+    /**
+     * State where the parking spot is located.
+     */
     private String estado;
+
+    /**
+     * Country where the parking spot is located.
+     */
     private String pais;
+
+    /**
+     * Quantity of parking spots available.
+     */
     private int quantity;
 }

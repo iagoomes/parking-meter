@@ -32,7 +32,7 @@ paths:
       operationId: "createSpot"
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: "#/components/schemas/ParkingSpotRequest"
         required: true
@@ -64,6 +64,16 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ParkingSpotResponse"
+              example:
+                id: 1
+                cep: "12345-678"
+                location: "L1"
+                logradouro: "Rua Exemplo"
+                bairro: "Centro"
+                cidade: "São Paulo"
+                estado: "SP"
+                pais: "Brasil"
+                quantity: 10
     put:
       tags:
         - Parking Spot
@@ -78,9 +88,18 @@ paths:
             format: "int64"
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: "#/components/schemas/ParkingSpotRequest"
+            example:
+              cep: "12345-678"
+              location: "L1"
+              logradouro: "Rua Exemplo"
+              bairro: "Centro"
+              cidade: "São Paulo"
+              estado: "SP"
+              pais: "Brasil"
+              quantity: 10
         required: true
       responses:
         "200":
@@ -89,6 +108,16 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ParkingSpotResponse"
+              example:
+                id: 1
+                cep: "12345-678"
+                location: "L1"
+                logradouro: "Rua Exemplo"
+                bairro: "Centro"
+                cidade: "São Paulo"
+                estado: "SP"
+                pais: "Brasil"
+                quantity: 10
     delete:
       tags:
         - Parking Spot
@@ -159,21 +188,32 @@ components:
       properties:
         cep:
           type: "string"
+          pattern: "^\\d{5}-\\d{3}$"
+          example: "12345-678"
         location:
           type: "string"
+          pattern: "^[LD]\\d+$"
+          exemple: "L1"
         logradouro:
           type: "string"
+          example: "Rua Exemplo"
         bairro:
           type: "string"
+          example: "Centro"
         cidade:
           type: "string"
+          exemplo: "São Paulo"
         estado:
           type: "string"
+          pattern: "^[A-Z]{2}$"
+          exemple: "SP"
         pais:
           type: "string"
+          exemple: "Brasil"
         quantity:
           type: "integer"
           format: "int32"
+          exemple: 10
     ParkingSpotResponse:
       type: "object"
       properties:
@@ -233,6 +273,8 @@ components:
         hours:
           type: "integer"
           format: "int32"
+          minimum: 1
+          maximum: 3
           example: 2
         licensePlate:
           type: "string"
