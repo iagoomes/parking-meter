@@ -28,6 +28,26 @@ a documentação da API e MapStruct para o mapeamento de objetos.
   cd parking-meter-api
 ```
 
+### 🚀 Opções de Build e Execução
+
+Abaixo segue duas opções de build e execução da aplicação: Dockerfile e com o Maven.
+
+ponível em http://localhost:8080.
+
+## Build com Docker
+Para construir a aplicação utilizando o Docker, execute o seguinte comando no diretório do projeto:
+
+```bash
+  docker build -t parking-meter-app .
+```
+Após a construção da imagem, você pode executar a aplicação com o comando:
+
+```bash
+  docker run -p 8080:8080 parking-meter-app
+```
+
+
+
 ## Gerando os Recursos com o OpenAPI Generator
 
 O OpenAPI Generator é uma ferramenta fundamental que automatiza a geração de código com base na 
