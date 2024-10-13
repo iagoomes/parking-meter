@@ -9,6 +9,11 @@ import lombok.Data;
 public class ParkingSpot {
 
     /**
+     * Unique identifier for the parking spot.
+     */
+    private Long id;
+
+    /**
      * Postal code (CEP) of the parking spot.
      */
     private String cep;

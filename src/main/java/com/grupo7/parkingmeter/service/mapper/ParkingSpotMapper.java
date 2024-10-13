@@ -18,7 +18,6 @@ public interface ParkingSpotMapper {
      * @param parkingSpot the ParkingSpot entity to convert
      * @return the converted ParkingSpotResponse DTO
      */
-    @Mapping(target = "id", ignore = true)
     ParkingSpotResponse toDTO(ParkingSpot parkingSpot);
 
     /**
@@ -27,5 +26,6 @@ public interface ParkingSpotMapper {
      * @param parkingSpotRequest the ParkingSpotRequest DTO to convert
      * @return the converted ParkingSpot entity
      */
+    @Mapping(target = "id", ignore = true)
     ParkingSpot toUseCaseData(ParkingSpotRequest parkingSpotRequest);
 }

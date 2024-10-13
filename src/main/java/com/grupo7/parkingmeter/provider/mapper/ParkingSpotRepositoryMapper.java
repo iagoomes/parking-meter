@@ -25,6 +25,5 @@ public interface ParkingSpotRepositoryMapper {
      * @param entity the ParkingSpot domain entity to convert
      * @return the converted ParkingSpotData repository entity
      */
-    @Mapping(target = "id", ignore = true)
     ParkingSpotData toRepositoryEntity(ParkingSpot entity);
 }
