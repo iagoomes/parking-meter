@@ -63,8 +63,14 @@ public class ParkingSpotProvider {
      *
      * @param useCaseData the parking spot data to create
      * @return the ID of the created parking spot
+     * @throws BusinessException if a parking spot with the given CEP and location already exists
      */
     public String create(ParkingSpot useCaseData) {
+        Optional<ParkingSpotData> existingSpot =
+                parkingSpotRepository.findByCepAndLocation(useCaseData.getCep(), useCaseData.getLocation());
+        if (existingSpot.isPresent()) {
+            throw new BusinessException("Parking spot with the given CEP and location already exists.", HttpStatus.CONFLICT);
+        }
         ParkingSpotData domain = mapper.toRepositoryEntity(useCaseData);
         return parkingSpotRepository.save(domain).getId().toString();
     }
@@ -72,7 +78,7 @@ public class ParkingSpotProvider {
     /**
      * Updates an existing parking spot.
      *
-     * @param id the ID of the parking spot to update
+     * @param id          the ID of the parking spot to update
      * @param useCaseData the updated parking spot data
      * @return the updated parking spot
      * @throws BusinessException if the parking spot is not found

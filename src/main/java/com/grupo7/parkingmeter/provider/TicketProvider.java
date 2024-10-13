@@ -50,7 +50,7 @@ public class TicketProvider {
     private void validateActiveTicketForLicensePlate(String licensePlate) {
         long activeTickets = ticketRepository.countValidTicketsByLicensePlate(licensePlate, OffsetDateTime.now());
         if (activeTickets > 0) {
-            throw new BusinessException("Já existe um ticket ativo para este veículo.", HttpStatus.CONFLICT);
+            throw new BusinessException("There is already an active ticket for this vehicle.", HttpStatus.CONFLICT);
         }
     }
 
@@ -64,7 +64,7 @@ public class TicketProvider {
     private void validateAvailableSpots(Long parkingSpotId, int maxSpots) {
         long validTickets = ticketRepository.countValidTickets(parkingSpotId, OffsetDateTime.now());
         if (validTickets >= maxSpots) {
-            throw new BusinessException("Não há vagas disponíveis no momento.", HttpStatus.CONFLICT);
+            throw new BusinessException("No available spots at the moment.", HttpStatus.CONFLICT);
         }
     }
 
