@@ -100,8 +100,8 @@
 								${project.basedir}/src/main/resources/openapi.yaml
 							</inputSpec>
 							<generatorName>spring</generatorName>
-							<apiPackage>com.grupo7.parkingmeter.api</apiPackage>
-							<modelPackage>com.grupo7.parkingmeter.model</modelPackage>
+							<apiPackage>com.fiap.parkingmeter.api</apiPackage>
+							<modelPackage>com.fiap.parkingmeter.model</modelPackage>
 							<supportingFilesToGenerate>
 								ApiUtil.java
 							</supportingFilesToGenerate>
